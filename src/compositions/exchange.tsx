@@ -25,7 +25,7 @@ function ExchangeComposition() {
     <PageLayout>
       <ListArea>
         <h2>Exchange Rates</h2>
-        <p>Valid for: {data?.date.toFormat('dd MM yyyy')}</p>
+        <p>Valid for: {data?.date.toFormat('dd MMM yyyy')}</p>
         {data.rates.map(rate => (
           <Card key={rate.code}>
             <strong>{rate.code}</strong> {rate.country}

@@ -13,12 +13,13 @@ const InputGroup = styled.div`
 
   input,
   select {
-    padding: 8px;
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: 4px;
-    font-size: 16px;
     background: ${({ theme }) => theme.colors.surface};
     color: ${({ theme }) => theme.colors.text};
+    border: 1px solid ${({ theme }) => theme.colors.border};
+    
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
 
     &:focus {
       outline: none;
