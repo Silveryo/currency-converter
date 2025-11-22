@@ -6,6 +6,7 @@ import ConverterArea from '../components/converter-area';
 import { useState } from 'react';
 import InputGroup from '../components/input-group';
 import ResultBox from '../components/result-box';
+import { convertCzkToForeign, formatCurrency } from '../lib/converter';
 
 function ExchangeComposition() {
   const { data, isSuccess } = useExchangeRatesQuery();
@@ -16,8 +17,9 @@ function ExchangeComposition() {
   // can also create an error component if we expect some network issue.
   if (!isSuccess || !data) return <div>Loading rates...</div>;
 
-  const conversionResult = 0;
-  //   const conversionResult = !isNaN(conversionAmount) ? convert
+  const conversionResult = !isNaN(parseFloat(conversionAmount))
+    ? convertCzkToForeign(Number(conversionAmount), targetCode, data.rates)
+    : null;
 
   return (
     <PageLayout>
@@ -38,15 +40,35 @@ function ExchangeComposition() {
         <Card>
           <h3>Super fast converter</h3>
           <InputGroup>
-            <label></label>
-            <input></input>
+            <label htmlFor="czk-amount">Amount (CZK)</label>
+            <input
+              id="czk-amount"
+              name="czk-amount"
+              inputMode="decimal"
+              type="number"
+              value={conversionAmount}
+              onChange={e => setConversionAmount(e.target.value)}
+            ></input>
           </InputGroup>
           <InputGroup>
-            <label></label>
-            <select></select>
+            <label htmlFor="currency-select"></label>
+            <select
+              id="currency-select"
+              name="currency-select"
+              value={targetCode}
+              onChange={e => setTargetCode(e.target.value)}
+            >
+              {data.rates.map(rate => (
+                <option key={rate.code} value={rate.code}>
+                  {rate.code} - {rate.currency}
+                </option>
+              ))}
+            </select>
           </InputGroup>
 
-          {conversionResult !== null && <ResultBox></ResultBox>}
+          {conversionResult !== null && (
+            <ResultBox>{formatCurrency(conversionResult, targetCode)}</ResultBox>
+          )}
         </Card>
       </ConverterArea>
     </PageLayout>
