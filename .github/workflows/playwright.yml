@@ -1,9 +1,11 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [master, try-to-fix-git-root]
   pull_request:
-    branches: [ main, master ]
+    branches: [master, try-to-fix-git-root]
+
 jobs:
   test:
     timeout-minutes: 60

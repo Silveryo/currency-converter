@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, try-to-fix-git-root]
   pull_request:
-    branches: [master]
+    branches: [master, try-to-fix-git-root]
 
 jobs:
   # Job 1: Lint, Typecheck, and Unit Tests
