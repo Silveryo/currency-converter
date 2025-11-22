@@ -1,9 +1,9 @@
 import 'styled-components';
+import { ThemeMode } from '../types';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    // theme ?
-    mode: "light" | "dark";
+    mode: ThemeMode;
     mobile: string;
     desktop: string;
     colors: {

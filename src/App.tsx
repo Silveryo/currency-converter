@@ -5,6 +5,9 @@ import { shouldRefetch } from './lib/refetch-rules';
 import { createIDBPersister } from './lib/persister';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import ExchangeComposition from './compositions/exchange';
+import ThemeToggle from './components/theme.toggle';
+import useThemeMode from './hooks/useThemeMode';
+import { darkTheme, lightTheme } from './styles/themes';
 
 // strong caching and as little refetching as possible
 // because the only date we fetch is update once a day.
@@ -30,19 +33,16 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const theme = {
-    mobile: '768px',
-    desktop: '1024px',
-};
-
 function App() {
+  const { mode, toggleTheme } = useThemeMode();
+  const activeTheme = mode === 'light' ? lightTheme : darkTheme;
+
   return (
     <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
-      <div>ČNB currency converter app</div>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={activeTheme}>
         <GlobalStyle />
         <ExchangeComposition />
-        
+        <ThemeToggle mode={mode} toggle={toggleTheme} />
       </ThemeProvider>
     </PersistQueryClientProvider>
   );
