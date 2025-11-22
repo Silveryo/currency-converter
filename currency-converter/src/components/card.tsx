@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const Card = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.text};
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 

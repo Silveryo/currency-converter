@@ -6,20 +6,20 @@ const PageLayout = styled.div`
 
     padding: 16px;
     max-width: 1200px;
-    margin 0 auto;
+    margin: 0 auto;
 
-    /* mobile */
-    grid-template-columns: 1fr;
-    grid-template-areas:
-        "converter"
-        "list";
-    
-    /* desktop */
-    @media (min-width: ${({ theme }) => theme.mobile} {
+  /* Mobile First: Single Column */
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "converter"
+    "list";
+
+  /* Desktop: Two Columns */
+  @media (min-width: ${({ theme }) => theme.mobile}) {
     grid-template-columns: 1fr 350px;
     grid-template-areas: "list converter";
     align-items: start;
-    }
+  }
 `;
 
 export default PageLayout;

@@ -1,17 +1,15 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import type { ExchangeRatesDataSerializable } from './lib/types';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { shouldRefetch } from './lib/refetch-rules';
 import { createIDBPersister } from './lib/persister';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { lightTheme, darkTheme } from './styles/themes';
+import type { ExchangeRatesDataSerializable } from './lib/types';
+import useThemeMode from './hooks/useThemeMode';
 import ExchangeComposition from './compositions/exchange';
 import ThemeToggle from './components/theme.toggle';
-import useThemeMode from './hooks/useThemeMode';
-import { darkTheme, lightTheme } from './styles/themes';
 
-// strong caching and as little refetching as possible
-// because the only date we fetch is update once a day.
-const queryClient = new QueryClient({
+const cachedQueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       gcTime: 1000 * 60 * 60 * 24 * 7,
@@ -19,7 +17,9 @@ const queryClient = new QueryClient({
       retry: false,
       staleTime: query => {
         const data = query.state.data as ExchangeRatesDataSerializable | undefined;
+
         const isStale = shouldRefetch(data?.dateIso);
+
         return isStale ? 0 : Infinity;
       },
     },
@@ -28,9 +28,13 @@ const queryClient = new QueryClient({
 const persister = createIDBPersister('cnb-rates-cache');
 
 const GlobalStyle = createGlobalStyle`
-    body {
-      
-    }
+  body {
+    background: ${({ theme }) => theme.colors.bg};
+    color: ${({ theme }) => theme.colors.text};
+    transition: background 0.2s ease-in, color 0.2s ease-in;
+    margin: 0;
+    font-family: system-ui, sans-serif;
+  }
 `;
 
 function App() {
@@ -38,11 +42,14 @@ function App() {
   const activeTheme = mode === 'light' ? lightTheme : darkTheme;
 
   return (
-    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
+    <PersistQueryClientProvider client={cachedQueryClient} persistOptions={{ persister }}>
       <ThemeProvider theme={activeTheme}>
+        <div style={{ padding: '1rem', textAlign: 'right' }}>
+          <ThemeToggle toggle={toggleTheme} mode={mode} />
+        </div>
+
         <GlobalStyle />
         <ExchangeComposition />
-        <ThemeToggle mode={mode} toggle={toggleTheme} />
       </ThemeProvider>
     </PersistQueryClientProvider>
   );

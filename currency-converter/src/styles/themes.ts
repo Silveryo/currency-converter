@@ -22,12 +22,12 @@ const darkTheme = {
   ...base,
   mode: ThemeModes[1],
   colors: {
-    bg: '#1A202C',
-    surface: '#2D3748',
-    text: '#E2E8F0',
-    textSecondary: '#A0AEC0',
-    primary: '#63B3ED',
-    border: '#4A5568',
+    bg: '#121212',
+    surface: '#1e1e1e',
+    text: '#e0e0e0',
+    textSecondary: '#e0e0e0',
+    primary: '#3182CE',
+    border: '#2D2D2D',
   },
 };
 

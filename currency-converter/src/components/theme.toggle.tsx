@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background: trasparent;
+  background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.border};
   color: ${({ theme }) => theme.colors.text};
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9rem;
   transition: all 0.2s;
 
   &:hover {
@@ -17,16 +17,16 @@ const Button = styled.button`
 `;
 
 interface Props {
-    toggle: () => void;
-    mode: 'light' | 'dark';
+  toggle: () => void;
+  mode: 'light' | 'dark';
 }
 
-function ThemeToggle({toggle, mode}: Props) {
-    return (
-        <Button onClick={toggle} aria-label="Toggle theme">
-            Switch to {mode === 'light' ? 'dark' : 'light'} mode
-        </Button>
-    );
+function ThemeToggle({ toggle, mode }: Props) {
+  return (
+    <Button onClick={toggle} aria-label="Toggle Dark Mode">
+      {mode === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+    </Button>
+  );
 }
 
 export default ThemeToggle;
