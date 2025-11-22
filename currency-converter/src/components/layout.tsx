@@ -17,8 +17,7 @@ const PageLayout = styled.div`
     /* desktop */
     @media (min-width: ${({ theme }) => theme.mobile} {
     grid-template-columns: 1fr 350px;
-    grid-template-areas:
-        "list converter"
+    grid-template-areas: "list converter";
     align-items: start;
     }
 `;

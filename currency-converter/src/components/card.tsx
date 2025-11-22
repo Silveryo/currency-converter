@@ -1,5 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Card = styled.div``;
+const Card = styled.div`
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+`;
 
 export default Card;
