@@ -2,8 +2,10 @@ import { DateTime } from 'luxon';
 import type { CnbRate, ExchangeRatesDataSerializable } from './types';
 import { RateLineSchema } from './schema';
 
+// resource has cors policy: strict-origin-when-cross-origin
+// we need a proxy. E.g lightweight express app. I will use a dev-only solution.
 const CNB_RESOURCE_ADDRESS =
-  'https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt';
+  'https://cors-anywhere.com/https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt';
 
 const CNB_DATA_SEPARATOR = '|';
 
@@ -65,7 +67,7 @@ function parseExchangeRateData(raw: string): ExchangeRatesDataSerializable {
   return {
     dateIso: dt.toISODate(),
     rates,
-  }
+  };
 }
 
 export { fetchExchangeRates, parseExchangeRateData };
