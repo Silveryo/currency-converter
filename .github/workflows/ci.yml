@@ -36,7 +36,7 @@ jobs:
         run: pnpm build
 
       - name: Unit Tests
-        run: pnpm test:ci
+        run: pnpm test
 
   # Job 2: End-to-End Tests
   e2e:
